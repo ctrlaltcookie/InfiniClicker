@@ -1,0 +1,19 @@
+.horrizontal-center-align {
+  width: 600px;
+  height: 200px;
+  margin: 0 auto; 
+}
+
+.message {
+  border-style: solid;
+  border-width: 2px;
+  padding: 8px;
+  border-color: grey;
+  overflow-y: scroll;
+}
+
+.true-center-align {
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+}
