@@ -27,6 +27,7 @@
       message.show();
       beSnarky(`Sigh, yeah, this is a clicker game, so, i guess, do your thing.`);
       firstClick = dord;
+      scroll();
     }
   }
 
@@ -66,26 +67,36 @@
     }
   }
 
+  //this is ugly
   function noClickFinal () {
-    setTimeout(function () {
+    setTimeout(function () { 
       beSnarky('Okay');
-      setTimeout(function () {
+      setTimeout(function () { 
         beSnarky('I see.');
-        setTimeout(function () {
+        setTimeout(function () { 
           beSnarky('I see how it is.');
-          setTimeout(function () {
+          setTimeout(function () { 
             beSnarky('Well.');
-            setTimeout(function () {
-              beSnarky('You\'re clearly not getting this so, i guess i\'ll just, sort of.');
-              setTimeout(function () {
-                beSnarky('Well done on your firstclick, that you totally did legitimately on your own!');
-                setTimeout(function () { clicks++; }, 1000);
-              }, 2000);
-            }, 650);
+           setTimeout(function () { 
+             beSnarky('You\'re clearly not getting this so, i guess i\'ll just, sort of.');
+              setTimeout(function () { 
+                beSnarky('CLICK');
+                setTimeout(function () {
+                  beSnarky('Well done on your firstclick, that you totally did legitimately on your own!');
+                  setTimeout(function () { 
+                    clicks++;
+                  }, 1000);
+                }, 1300);
+              }, 100);
+            }, 1400);
           }, 100);
-        }, 180);
-      }, 90);
-    }, 80);   
+        }, 500);
+      }, 200);
+    }, 100);   
+  }
+
+  function scroll () {
+    $('#message').animate({scrollTop: $('#message').prop("scrollHeight")}, 500);
   }
 
   $(document).ready(function(){
