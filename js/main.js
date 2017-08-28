@@ -2,9 +2,8 @@
   var $clicker;
   var clicks = 0;
   var timeOut;
-  var message;
-
-
+  var $message;
+  var $counter;
 
   function click () {
     clicks++;
@@ -12,6 +11,7 @@
 
   function updateLabels() {
     checkClicks();
+    $counter.text(clicks);
   }
 
   function checkClicks() {
@@ -24,7 +24,7 @@
 
   function firstClick() {
     if (clicks) { 
-      message.show();
+      $message.show();
       beSnarky(`Sigh, yeah, this is a clicker game, so, i guess, do your thing.`);
       firstClick = dord;
       scroll();
@@ -37,7 +37,7 @@
 
   function noClickFiveMins () {
     if (clicks === 0) {
-      message.show();
+      $message.show();
       beSnarky('This is a game about clicking so... get on with it.');
       setTimeout(noClickTenMins, 300000);
     }
@@ -45,7 +45,7 @@
 
   function noClickTenMins () {
     if (clicks === 0) {
-      message.show();
+      $message.show();
       beSnarky('You keep forgetting to click.');
       setTimeout(noClickFifteenMins, 300000);
     }
@@ -53,7 +53,7 @@
 
   function noClickFifteenMins () {
     if (clicks === 0) {
-      message.show();
+      $message.show();
       beSnarky('Look, can you, just?');
       setTimeout(noClickTwentyMins, 300000);
     }
@@ -61,7 +61,7 @@
 
   function noClickTwentyMins () {
     if (clicks === 0) {
-      message.show();
+      $message.show();
       beSnarky('Ffs, just click okay?');
       setTimeout(noClickFinal, 300000);
     }
@@ -102,9 +102,10 @@
   $(document).ready(function(){
   //register click handlers after dom is rendered.
     $clicker = $('#clicker');
+    $counter = $('#counter');
     $clicker.on('click', click);
-    message = $('#message');
-    message.hide();
+    $message = $('#message');
+    $message.hide();
     timeOut = setInterval(updateLabels, 10);
     if (clicks === 0) {
       setTimeout(noClickFiveMins, 300000);
@@ -112,5 +113,4 @@
     };
   });
 
-})()
-
+})();
