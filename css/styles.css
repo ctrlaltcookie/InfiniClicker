@@ -18,3 +18,11 @@
   left: 50%;
   text-align: center;
 }
+
+.bottom {
+    height: 250px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: block;
+}

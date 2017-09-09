@@ -116,8 +116,11 @@
 
     screenUpdateTimeout = setInterval(updateLabels, 10);
     
-    gameData = gameLoad();
-
+    try {
+      gameData = gameLoad();
+    } catch (ex) {
+      console.log("looks like you have no game data! this might be an error, contact @therickest_ on twatter");
+    }
     if (gameData.clicks === 0) {
       setTimeout(noClickFiveMins, 300000);
     };
