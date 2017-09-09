@@ -10,7 +10,11 @@
     score: 0,
     autoSave: false,
     clickBonus: 0,
-    scoreClicks: 0
+    scoreClicks: 0,
+    upgradeSnark: {
+      id: undefined, 
+      snark: undefined
+    }
   };
 
   function removeScore (cost) {
@@ -23,15 +27,19 @@
     gameData.historicScore += (1 + gameData.clickBonus)
   }
 
+  function upgradeSnark(id, text, gameData) {
+    gameData.upgradeSnark = { id: id, snark: text };
+  }
+
   function click () {
     incrementClicks();
-    triggerSnark(gameData.historicScore);
+    triggerSnark(gameData, upgradeSnark);
   }
 
   function updateLabels () {
     checkClicks();
     displayUpgrades(gameData.historicScore);
-    $counter.text(gameData.score);
+    $counter.text(`Score: ${gameData.score}`);
   }
 
   function checkClicks () {

@@ -1,6 +1,7 @@
-function triggerSnark(score) {
-  if (score === 10) {
-    beSnarky("Hey look at that, you've clicked 10 times, that's a lot of strain on your mouse, maybe use some of your clicks on an upgrade or two.");
+function triggerSnark(gameData, upgradeSnark) {
+  if (gameData.historicScore === 15 && gameData.clickBonus < 1) {
+    beSnarky('Haha noob, buy the upgrade');
+    upgradeSnark(0, 'Acheevemunt get: following <a href="https://www.youtube.com/watch?v=2-bbYH_akHg" target="_blank">ordahs</a>', gameData);
   }
 };
 

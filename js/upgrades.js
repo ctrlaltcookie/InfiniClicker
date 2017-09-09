@@ -24,10 +24,13 @@ function displayUpgrades (score) {
 
 function purchaseUpgrade (upgradeId, removeScore, gameData) {
   upgradeId = parseInt(upgradeId);
-  if (upgradeId && gameData.score >= upgrades[upgradeId].cost) {
+  if (!isNaN(upgradeId) && gameData.score >= upgrades[upgradeId].cost) {
     removeScore(upgrades[upgradeId].cost);
     upgrades[upgradeId].upgrade(gameData);
     $(`#${upgradeId}`).remove();
+    if (gameData.upgradeSnark.id === upgradeId) {
+      beSnarky(gameData.upgradeSnark.snark);
+    }
   } else {
     gameData.scoreClicks++;
   }
