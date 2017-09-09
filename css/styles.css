@@ -54,3 +54,9 @@
 .powerup:hover {
   background-color: #fafad2;
 }
+
+.advert {
+  position: fixed;
+  top: 50%;
+  left: 100%;
+}

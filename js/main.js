@@ -14,7 +14,8 @@
     upgradeSnark: {
       id: undefined, 
       snark: undefined
-    }
+    },
+    upgrades: []
   };
 
   function removeScore (cost) {
@@ -38,7 +39,7 @@
 
   function updateLabels () {
     checkClicks();
-    displayUpgrades(gameData.historicScore);
+    displayUpgrades(gameData);
     $counter.text(`Score: ${gameData.score}`);
   }
 
