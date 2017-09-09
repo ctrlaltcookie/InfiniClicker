@@ -48,9 +48,9 @@
 }
 
 .tool:hover {
-  background-color: grey;
+  background-color: lightgrey;
 }
 
 .powerup:hover {
-  background-color: goldenrod;
+  background-color: #fafad2;
 }

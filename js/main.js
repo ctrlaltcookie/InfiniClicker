@@ -1,4 +1,4 @@
-(function(){
+(function () {
   var $clicker;
   var screenUpdateTimeout;
   var autoSaveInterval;
@@ -9,7 +9,8 @@
     historicScore: 0,
     score: 0,
     autoSave: false,
-    clickBonus: 0
+    clickBonus: 0,
+    scoreClicks: 0
   };
 
   function removeScore (cost) {

@@ -3,7 +3,7 @@ var upgrades = [
     cost: 10,
     name: "Click 2: re-clickening",
     description: "Clicking is more powerful, click power +1",
-    type: "tool",
+    type: "powerup",
     upgrade: function (gameData) {
       gameData.clickBonus += 1;
     }, 
@@ -24,10 +24,12 @@ function displayUpgrades (score) {
 
 function purchaseUpgrade (upgradeId, removeScore, gameData) {
   upgradeId = parseInt(upgradeId);
-  if (gameData.score >= upgrades[upgradeId].cost) {
+  if (upgradeId && gameData.score >= upgrades[upgradeId].cost) {
     removeScore(upgrades[upgradeId].cost);
     upgrades[upgradeId].upgrade(gameData);
     $(`#${upgradeId}`).remove();
+  } else {
+    gameData.scoreClicks++;
   }
 }
 
