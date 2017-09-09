@@ -26,3 +26,31 @@
     bottom: 0;
     display: block;
 }
+
+.tool, .powerup {
+  width: 175px;
+  padding: 5px;
+  font-size: 12;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.tool {
+  border: 2px dashed grey;
+}
+
+.powerup {
+  border: 2px dashed goldenrod;
+}
+
+.tool:hover, .powerup:hover {
+  cursor: pointer;
+}
+
+.tool:hover {
+  background-color: grey;
+}
+
+.powerup:hover {
+  background-color: goldenrod;
+}

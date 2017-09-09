@@ -6,35 +6,38 @@
   var $counter;
   var gameData = {
     clicks: 0,
+    historicScore: 0,
     score: 0,
-    autoSave: false
+    autoSave: false,
+    clickBonus: 0
   };
 
-  function incrementClicks() {
+  function removeScore (cost) {
+    gameData.score -= cost;
+  }
+
+  function incrementClicks () {
     gameData.clicks++;
-    gameData.score++;
+    gameData.score += (1 + gameData.clickBonus);
+    gameData.historicScore += (1 + gameData.clickBonus)
   }
 
   function click () {
     incrementClicks();
-    triggerSnark(gameData.clicks);
+    triggerSnark(gameData.historicScore);
   }
 
-  function updateLabels() {
+  function updateLabels () {
     checkClicks();
-    displayUpgrades();
+    displayUpgrades(gameData.historicScore);
     $counter.text(gameData.score);
   }
 
-  function checkClicks() {
+  function checkClicks () {
     firstClick();
   }
 
-  function dord () {
-    return;
-  }
-
-  function firstClick() {
+  function firstClick () {
     if (gameData.clicks) { 
       $message.show();
       beSnarky(`Sigh, yeah, this is a clicker game, so, i guess, do your thing.`);
@@ -106,8 +109,13 @@
     gameSave(gameData);
   }
 
-  $(document).ready(function(){
+  $(document).ready(function () {
   //register click handlers after dom is rendered.
+    //special function to grab all upgrades!!
+    $(document).on('click', 'p', function (e) {
+      purchaseUpgrade(e.target.id, removeScore, gameData);
+    });
+
     $clicker = $('#clicker');
     $counter = $('#counter');
     $clicker.on('click', click);

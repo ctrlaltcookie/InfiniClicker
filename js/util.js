@@ -17,3 +17,7 @@ function gameLoad () {
 function scroll () {
   $('#message').animate({scrollTop: $('#message').prop("scrollHeight")}, 500);
 }
+
+function dord () {
+  return;
+}
