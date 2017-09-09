@@ -1,16 +1,23 @@
 (function(){
   var $clicker;
-  var timeOut;
+  var screenUpdateTimeout;
   var autoSaveInterval;
   var $message;
   var $counter;
   var gameData = {
     clicks: 0,
-    autoSave: true
+    score: 0,
+    autoSave: false
   };
 
-  function click () {
+  function incrementClicks() {
     gameData.clicks++;
+    gameData.score++;
+  }
+
+  function click () {
+    incrementClicks();
+    triggerSnark(gameData.score);
   }
 
   function updateLabels() {
@@ -31,12 +38,12 @@
       $message.show();
       beSnarky(`Sigh, yeah, this is a clicker game, so, i guess, do your thing.`);
       firstClick = dord;
-      scroll();
     }
   }
 
   function beSnarky (snark) {
     $(`<div>${snark}</div>`).appendTo('#message');
+    scroll();
   }
 
   function noClickFiveMins () {
@@ -114,13 +121,13 @@
     $clicker.on('click', click);
     $message = $('#message');
     $message.hide();
-    timeOut = setInterval(updateLabels, 10);
+
+    screenUpdateTimeout = setInterval(updateLabels, 10);
     
     gameData = gameLoad();
 
     if (gameData.clicks === 0) {
       setTimeout(noClickFiveMins, 300000);
-      //set to 300000 when testing is finished
     };
 
     if (gameData.autoSave) {
