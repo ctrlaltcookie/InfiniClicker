@@ -17,12 +17,13 @@
 
   function click () {
     incrementClicks();
-    triggerSnark(gameData.score);
+    triggerSnark(gameData.clicks);
   }
 
   function updateLabels() {
     checkClicks();
-    $counter.text(gameData.clicks);
+    displayUpgrades();
+    $counter.text(gameData.score);
   }
 
   function checkClicks() {
@@ -39,11 +40,6 @@
       beSnarky(`Sigh, yeah, this is a clicker game, so, i guess, do your thing.`);
       firstClick = dord;
     }
-  }
-
-  function beSnarky (snark) {
-    $(`<div>${snark}</div>`).appendTo('#message');
-    scroll();
   }
 
   function noClickFiveMins () {
@@ -95,7 +91,7 @@
                 setTimeout(function () {
                   beSnarky('Well done on your firstclick, that you totally did legitimately on your own!');
                   setTimeout(function () { 
-                    gameData.clicks++;
+                    click();
                   }, 1000);
                 }, 1300);
               }, 100);
@@ -104,10 +100,6 @@
         }, 500);
       }, 200);
     }, 100);   
-  }
-
-  function scroll () {
-    $('#message').animate({scrollTop: $('#message').prop("scrollHeight")}, 500);
   }
 
   function autoSave () {
