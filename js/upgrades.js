@@ -13,17 +13,20 @@ var upgrades = [
   {
     cost: 10,
     name: "Click 2: re-clickening",
-    description: "Clicking is more powerful, click power x 2",
+    description: "Clicking is more powerful, click power  +1",
     type: "powerup",
     upgrade: function (gameData) {
-      gameData.clickBonus = gameData.clickBonus * 2;
+      gameData.clickBonus = gameData.clickBonus + 1;
     }
   },
   {
     cost: 25,
     name: "Auto-Clicker",
     description: "Clicks once a second for you",
-    disabled: true
+    type: "tool",
+    upgrade: function (gameData) {
+      gameData.autoClickers += 1;
+    }
   }
 ]
 

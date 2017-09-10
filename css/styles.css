@@ -20,11 +20,13 @@
 }
 
 .bottom {
-    height: 250px;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    display: block;
+  max-height: 140px;
+  width: 96%;
+  position: fixed;
+  bottom: 0;
+  display: block;
+  margin-left: 4px;
+  margin-bottom: 12px;
 }
 
 .tool, .powerup {
@@ -53,6 +55,15 @@
 
 .powerup:hover {
   background-color: #fafad2;
+}
+
+.upgrades {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 0px;
+  padding-bottom: 10px;
+  border: 2px lightskyblue;
+  border-style: double;
 }
 
 .advert {

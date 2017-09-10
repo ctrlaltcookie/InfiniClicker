@@ -4,6 +4,7 @@
   var autoSaveInterval;
   var $message;
   var $counter;
+  var oneSecondInterval;
   var gameData = {
     clicks: 0,
     historicScore: 0,
@@ -15,7 +16,8 @@
       id: undefined, 
       snark: undefined
     },
-    upgrades: []
+    upgrades: [],
+    autoClickers: 0
   };
 
   function removeScore (cost) {
@@ -35,6 +37,14 @@
   function click () {
     incrementClicks();
     triggerSnark(gameData, upgradeSnark);
+  }
+
+  function autoClick () {
+    if (gameData.autoClickers) {
+      for (var i = 0; i < gameData.autoClickers; i++) {
+        click();
+      }
+    }
   }
 
   function updateLabels () {
@@ -124,6 +134,7 @@
     //special function to grab all upgrades!!
     $(document).on('click', 'p', function (e) {
       purchaseUpgrade(e.target.id, removeScore, gameData);
+      triggerSnark(gameData);
     });
 
     $clicker = $('#clicker');
@@ -133,6 +144,8 @@
     $message.hide();
 
     screenUpdateTimeout = setInterval(updateLabels, 10);
+
+    oneSecondInterval = setInterval(autoClick, 1000);
     
     try {
       gameData = gameLoad();
