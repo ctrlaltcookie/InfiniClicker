@@ -16,8 +16,11 @@
       id: undefined, 
       snark: undefined
     },
-    upgrades: [],
-    autoClickers: 0
+    upgrades: {},
+    autoClickers: 0,
+    tools: 0,
+    powerups: 0,
+    oddClicks: false
   };
 
   function removeScore (cost) {
@@ -26,6 +29,9 @@
 
   function incrementClicks () {
     gameData.clicks++;
+    if (gameData.oddClicks && gameData.clicks % 2) {
+      gameData.score += 3;
+    }
     gameData.score += (1 + gameData.clickBonus);
     gameData.historicScore += (1 + gameData.clickBonus)
   }

@@ -11,22 +11,45 @@ var upgradeTemplate = {
 
 var upgrades = [ 
   {
-    cost: 10,
+    cost: 12,
     name: "Click 2: re-clickening",
     description: "Clicking is more powerful, click power  +1",
     type: "powerup",
     upgrade: function (gameData) {
       gameData.clickBonus = gameData.clickBonus + 1;
-    }
+      gameData.powerups++;
+    },
+    isEnabled: function (gameData) {
+      return true;
+    },
+    snark: "Yeah i guess that's probably a good purchase tbh"
   },
   {
-    cost: 25,
+    cost: 300,
     name: "Auto-Clicker",
     description: "Clicks once a second for you",
     type: "tool",
     upgrade: function (gameData) {
       gameData.autoClickers += 1;
-    }
+      gameData.tools++;
+    },
+    isEnabled: function (gameData) {
+      return true;
+    },
+    snark: "God damn, it feels good not to click anymore, right? right? maybe... just... a few more clicks"
+  },
+  {
+    cost: 1539,
+    name: "The Oddening",
+    description: "Odd clicks are worth +3.",
+    type: "powerup",
+    upgrade: function (gameData) {
+      gameData.oddClicks = true;
+    },
+    isEnabled: function (gameData) {
+      return true;
+    },
+    snark: "I..i really don't know if this is... worth it?"
   }
 ]
 
@@ -34,10 +57,10 @@ var upgrades = [
 function displayUpgrades (gameData) {
   for (var i = 0; i < upgrades.length; i++) {
     var upgrade = upgrades[i];
-    if (!upgrade.disabled) { 
-      if (gameData.upgrades[i] !== true && upgrade.cost <= gameData.historicScore) {
+    if (upgrade.isEnabled(gameData)) {
+      if (gameData.upgrades[upgrade.name] !== true) {
         addUpgrade(i, upgrade.name, upgrade.cost, upgrade.description, upgrade.type)
-        gameData.upgrades[i] = true;
+        gameData.upgrades[upgrade.name] = true;
       }
     }
   }
@@ -45,10 +68,12 @@ function displayUpgrades (gameData) {
 
 function purchaseUpgrade (upgradeId, removeScore, gameData) {
   upgradeId = parseInt(upgradeId);
-  if (!isNaN(upgradeId) && gameData.score >= upgrades[upgradeId].cost) {
-    removeScore(upgrades[upgradeId].cost);
-    upgrades[upgradeId].upgrade(gameData);
+  var upgrade = upgrades[upgradeId];
+  if (!isNaN(upgradeId) && gameData.score >= upgrade.cost) {
+    removeScore(upgrade.cost);
+    upgrade.upgrade(gameData);
     $(`#${upgradeId}`).remove();
+    beSnarky(upgrade.snark)
     if (gameData.upgradeSnark.id === upgradeId) {
       beSnarky(gameData.upgradeSnark.snark);
     }
