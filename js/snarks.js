@@ -4,7 +4,7 @@ function triggerSnark(gameData, upgradeSnark) {
     upgradeSnark(0, 'Acheevemunt get: following <a href="https://www.youtube.com/watch?v=2-bbYH_akHg" target="_blank">ordahs</a>', gameData);
   }
   if (gameData.scoreClicks === 10) {
-    beSnarky('That\'s the score dumbass, the click button couldn\'t be closer');
+    beSnarky('That\'s the score dumbass, the click button <em>couldn\'t</em> be closer');
     gameData.scoreClicks++;
   }
   if (gameData.scoreClicks === 150) {
