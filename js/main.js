@@ -143,6 +143,20 @@
       triggerSnark(gameData);
     });
 
+    $('#dialog').dialog(
+      { 
+        'autoOpen': true,
+        buttons: [
+          {
+            text: 'OK',
+            click: function () {
+              $(this).dialog('close');
+            }
+          }
+        ]
+      }
+    );
+
     $clicker = $('#clicker');
     $counter = $('#counter');
     $clicker.on('click', click);

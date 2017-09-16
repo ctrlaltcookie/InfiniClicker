@@ -25,7 +25,7 @@ var upgrades = [
     snark: "Yeah i guess that's probably a good purchase tbh"
   },
   {
-    cost: 138,
+    cost: 23,
     name: "Auto-Clicker",
     description: "Clicks once a second for you",
     type: "tool",
