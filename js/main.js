@@ -27,7 +27,7 @@
     gameData.score -= cost;
   }
 
-  function incrementClicks () {
+  function incrementClicksAndScore () {
     gameData.clicks++;
     if (gameData.oddClicks && gameData.clicks % 2) {
       gameData.score += 3;
@@ -41,7 +41,7 @@
   }
 
   function click () {
-    incrementClicks();
+    incrementClicksAndScore();
     triggerSnark(gameData, upgradeSnark);
   }
 

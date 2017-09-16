@@ -25,7 +25,7 @@ var upgrades = [
     snark: "Yeah i guess that's probably a good purchase tbh"
   },
   {
-    cost: 300,
+    cost: 138,
     name: "Auto-Clicker",
     description: "Clicks once a second for you",
     type: "tool",
@@ -36,7 +36,7 @@ var upgrades = [
     isEnabled: function (gameData) {
       return true;
     },
-    snark: "God damn, it feels good not to click anymore, right? right? maybe... just... a few more clicks"
+    snark: "God damn, it feels good not to click anymore, r-right? Well... maybe... j-just a <em>few more</em> clicks"
   },
   {
     cost: 1539,
@@ -50,6 +50,20 @@ var upgrades = [
       return true;
     },
     snark: "I..i really don't know if this is... worth it?"
+  },
+  {
+    cost: 600,
+    name: "Auto-Clicker x2",
+    description: "Clicks once a second for you",
+    type: "tool",
+    upgrade: function (gameData) {
+      gameData.autoClickers += 1;
+      gameData.tools++;
+    },
+    isEnabled: function (gameData) {
+      return gameData.autoClickers > 0;
+    },
+    snark: "Holy shit this costs so much more than the last one what gives???"
   }
 ]
 

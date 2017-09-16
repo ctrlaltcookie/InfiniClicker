@@ -1,7 +1,7 @@
 var scoreTarget = [
   {
     name: 'leet',
-    message: 'ur s0 l33t',
+    message: `U'r <strong>s0</strong> l33t!!!1one!"`,
     req: 1337
   },
   {
@@ -14,7 +14,7 @@ var scoreTarget = [
   },
   {
     name: 'consecutive',
-    message: 'Holy shit your score is exactly consecutive!, score x1000',
+    message: '<em>Holy shit fuck</em> your score is exactly consecutive! score x1000!!',
     req: 123456789,
     trigger: function (gameData) {
       gameData.score = gameData.score * 1000;
@@ -27,7 +27,7 @@ var scoreTarget = [
   },
   {
     name: 'shit',
-    message: `Shhiiitttt your score is totally shit, score -5417, that'll fuggin teach`,
+    message: `Shhiiitttt your score is totally <em>shit</em>, score -5417, that'll fuggin teach you.`,
     req: 5417,
     trigger: function (gameData) {
       gameData.score = 0;
@@ -35,10 +35,10 @@ var scoreTarget = [
   },
   {
     name: 'lost',
-    message: `This show sucks, here's your reward for being so unlucky as to land on this number; score -999999`,
+    message: `This show sucks, here's your reward for being so unlucky as to land on this number; score -10`,
     req: 4815162342,
     trigger: function (gameData) {
-      gameData.score -= 999999;
+      gameData.score -= 10;
     }
   },
   {
@@ -57,12 +57,12 @@ function triggerSnark(gameData, upgradeSnark) {
     beSnarky('Haha noob, click on the upgrade to buy it');
     upgradeSnark(0, 'Acheevemunt get: following <a href="https://www.youtube.com/watch?v=2-bbYH_akHg" target="_blank">ordahs</a>', gameData);
   }
-  if (gameData.historicScore === 2000 && gameData.autoClickers) {
-    beSnarky('<strong>slow clap</strong> You clicked a lot to get here but uhh');
+  if (gameData.historicScore === 2000 && gameData.autoClickers < 1 && gameData.tools < 1 && gameData.powerups < 1) {
+    beSnarky('<strong>slow clap</strong> You clicked a lot to get here but uhh, you should probably just buy some upgrades, there\'s no point to this bub.');
   }
 
-  currentScoreSnarks();
-  clickScoreSnark();
+  currentScoreSnarks(gameData);
+  clickScoreSnark(gameData);
 };
 
 function beSnarky (snark) {
@@ -84,20 +84,19 @@ function currentScoreSnarks(gameData) {
   // 667();
   // 668();
   // 42();
+  // 100();
   // potential future snarks;
 
   var newArray  = scoreTarget.filter(function(item){
-    return gameData.score < item.req;
+    return gameData.score <= item.req;
   });
 
   scoreTarget = newArray;
 
   for (var k = 0; k < scoreTarget.length; k++) {
-    if (gameData.score === scoreTarget[i].req) {
-      beSnarky(scoreTarget[i].message);
-      if (scoreTarget[i].trigger) {
-        scoreTarget[i].trigger();
-      }
+    if (gameData.score === scoreTarget[k].req) {
+      beSnarky(scoreTarget[k].message);
+      typeof scoreTarget[k].trigger === 'function' && scoreTarget[k].trigger(gameData);
     }
   }
 }
