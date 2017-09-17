@@ -46,7 +46,7 @@ var scoreTarget = [
     message: `I know how this feels, hope this helps you feel better.`,
     req: 55378008,
     trigger: function (gameData) {
-      beSnarky('EXTRAVAGENT GIFT INCOMING');
+      warnToast('EXTRAVAGENT GIFT INCOMING');
       gameData.score = gameData.score * gameData.score;
     }
   }
@@ -65,9 +65,16 @@ function triggerSnark(gameData, upgradeSnark) {
   clickScoreSnark(gameData);
 };
 
-function beSnarky (snark) {
-  $(`<div>${snark}</div>`).appendTo('#message');
-  scroll();
+function beSnarky (message) {
+  toastr['info'](message, "Snark");
+}
+
+function warnToast (message) {
+  toastr['warning'](snark, "Woah!");
+}
+
+function upgradeToast (message) {
+  toastr['success'](message, "Success!");
 }
 
 function clickScoreSnark(gameData) {

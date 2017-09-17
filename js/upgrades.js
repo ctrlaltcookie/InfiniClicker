@@ -88,9 +88,10 @@ function purchaseUpgrade (upgradeId, removeScore, gameData) {
     removeScore(upgrade.cost);
     upgrade.upgrade(gameData);
     $(`#${upgradeId}`).remove();
-    beSnarky(upgrade.snark)
+    upgradeToast(upgrade.snark)
+    upgradeToast(`Purchased ${upgrade.name}`)
     if (gameData.upgradeSnark.id === upgradeId) {
-      beSnarky(gameData.upgradeSnark.snark);
+      upgradeToast(gameData.upgradeSnark.snark);
     }
   } else {
     gameData.scoreClicks++;
