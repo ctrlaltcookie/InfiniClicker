@@ -9,21 +9,7 @@ var upgradeTemplate = {
   displayed: false
 }
 
-var upgrades = [ 
-  {
-    cost: 12,
-    name: "Click 2: re-clickening",
-    description: "Clicking is more powerful, click power  +1",
-    type: "powerup",
-    upgrade: function (gameData) {
-      gameData.clickBonus = gameData.clickBonus + 1;
-      gameData.powerups++;
-    },
-    isEnabled: function (gameData) {
-      return true;
-    },
-    snark: "Yeah i guess that's probably a good purchase tbh"
-  },
+var upgrades = [
   {
     cost: 23,
     name: "Auto-Clicker",
@@ -39,12 +25,27 @@ var upgrades = [
     snark: "God damn, it feels good not to click anymore, r-right? Well... maybe... j-just a <em>few more</em> clicks"
   },
   {
+    cost: 900,
+    name: "Click 2: re-clickening",
+    description: "Clicking is more powerful, click power  +1",
+    type: "powerup",
+    upgrade: function (gameData) {
+      gameData.clickBonus = gameData.clickBonus + 1;
+      gameData.powerups++;
+    },
+    isEnabled: function (gameData) {
+      return true;
+    },
+    snark: "Yeah i guess that's probably a good purchase tbh"
+  },
+  {
     cost: 1539,
     name: "The Oddening",
     description: "Odd clicks are worth +3.",
     type: "powerup",
     upgrade: function (gameData) {
       gameData.oddClicks = true;
+      gameData.powerups++;
     },
     isEnabled: function (gameData) {
       return true;
