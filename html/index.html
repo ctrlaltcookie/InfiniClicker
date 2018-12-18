@@ -2,53 +2,46 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
-    <link rel="stylesheet" type="text/css" href="../css/jq-ui.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">    
-    <script type="text/javascript" src="../js/jq.js"></script>
-    <script type="text/javascript" src="../js/jq-ui.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script type="text/javascript" src="../js/util.js"></script>
-    <script type="text/javascript" src="../js/snarks.js"></script>
-    <script type="text/javascript" src="../js/upgrades.js"></script>
-    <script type="text/javascript" src="../js/main.js"></script>
-
     <title>Stupid killed the cat, curiosity brought it back</title>
   </head>
   <body>
     <div>
       
-      <div class="top tools" id="tools">
+      <div class="top tools hidden" id="tools">
       </div>
 
-      <div class="center-left">
-        
-      </div>
       <div class="true-center-align">
         <p id="counter">0</p>
         <input type="button" id="clicker" value="Click" class="ui-button ui-corner-all ui-widget"/>
       </div>
-      <div class="bottom upgrades" id="upgrades">
+
+      <div class="bottom upgrades hidden" id="upgrades">
       </div>
+
     </div>
     <div id="advert" class="advert">
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <!-- qwp2 -->
-      <ins class="adsbygoogle"
-          style="display:block"
-          data-ad-client="ca-pub-7339580356960132"
-          data-ad-slot="2607051235"
-          data-ad-format="auto"></ins>
-      <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
+      
     </div>
-    <div id="dialog" title="In progress!">
-      <p>
-        Infiniclicker is still in progress. If you experience any trouble with the game try force-refreshing 
-        and clearing your cache, you will lose your progress so be warned. Have fun and
-        if you have any issues send a tweet over to <a href="https://twitter.com/TheRickest_" target="_blank">@TheRickest_</a>
-      </p>
+
+    <!-- The Modal -->
+    <div id="modal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id='close' class="close">&times;</span>
+          <h2 id="modal-header">Modal Header</h2>
+        </div>
+        <div id="modal-body" class="modal-body">
+        </div>
+        <div id="modal-footer" class="modal-footer">
+        </div>
+      </div>
     </div>
+
+
   </body>
+  <script type="text/javascript" src="../js/upgrades.js"></script>
+  <script type="text/javascript" src="../js/main.js"></script>
 </html>
 
