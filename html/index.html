@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" /> 
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <script type="text/javascript" src="../js/util.js"></script>
+    <script type="text/javascript" src="../js/tools.js"></script>
     <title>Stupid killed the cat, curiosity brought it back</title>
   </head>
   <body>
     <div>
       
-      <div class="top tools hidden" id="tools">
+      <div class="top tools hidden" id="toolsbox">
       </div>
 
       <div class="true-center-align">
-        <p id="counter">0</p>
+        <p id="counter"></p>
         <input type="button" id="clicker" value="Click" class="ui-button ui-corner-all ui-widget"/>
       </div>
 
-      <div class="bottom upgrades hidden" id="upgrades">
+      <div class="hidden bottom upgrades" id="upgradesbox">
       </div>
 
     </div>
+
     <div id="advert" class="advert">
-      
     </div>
 
     <!-- The Modal -->
@@ -30,11 +32,13 @@
       <div class="modal-content">
         <div class="modal-header">
           <span id='close' class="close">&times;</span>
-          <h2 id="modal-header">Modal Header</h2>
+          <h2 id="modal-header">Welcome!</h2>
         </div>
         <div id="modal-body" class="modal-body">
+          Hey there! This little clicker game is still in development, things are changing rapidly and features are getting added all the time. If you have any problems please tweet to <a href="https://www.twitter.com/ctrlaltcookie">@CtrlAltCookie</a> and i'll try and get things fixed.
         </div>
         <div id="modal-footer" class="modal-footer">
+          Thanks and have fun!
         </div>
       </div>
     </div>
