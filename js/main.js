@@ -143,7 +143,7 @@ const setupModal = function (domElements) {
       name: 'Termites',
       cost: 10,
       exponent: 1.22,
-      description: "A fresh pack of bugs to help you cut down trees",
+      description: "A fresh pack of bugs to help you cut down trees.",
       power: 0.1,
       enabled: (state) => state.clicks >= 3
     },
@@ -151,7 +151,7 @@ const setupModal = function (domElements) {
       name: 'Dwarves',
       cost: 100,
       exponent: 1.20,
-      description: "These short men really hate trees, you're not sure why but they are hard workers",
+      description: "These short men really hate trees, you're not sure why but they are hard workers.",
       power: 1,
       enabled: (state) => state.score > 80
     },
@@ -159,7 +159,7 @@ const setupModal = function (domElements) {
       name: 'Floating axes',
       cost: 500,
       exponent: 1.24,
-      description: "None of the dwarves will use these ominous black axes, but no matter, they'll just use themselves",
+      description: "None of the dwarves will use these ominous black axes, but no matter, they'll just use themselves.",
       power: 5,
       enabled: (state) => state.score > 300
     }
