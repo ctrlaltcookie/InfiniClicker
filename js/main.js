@@ -12,7 +12,7 @@ const setupModal = function (domElements) {
 // Initiate
 (function () {
 
-  const gameState = {
+  let gameState = {
     clicks: 0,
     score: 0,
     bonus: 0,
@@ -101,7 +101,6 @@ const setupModal = function (domElements) {
   };
 
   const displayTool = function (domElement, tool, state) {
-    state.tools[tool] = 0;
     domElement.className = 'tool'
     domElement.innerHTML =
       `${tools[tool].name}<br>`+
@@ -126,17 +125,22 @@ const setupModal = function (domElements) {
     if (gameState.tools.Termites === undefined && tools.Termites.enabled(gameState)) {
       domElements.toolsBox.className = 'top tools'
       displayTool(domElements.Termites, 'Termites', gameState);
+      gameState.tools.Termites = 0;
     }
     if (gameState.tools.Dwarves === undefined && tools.Dwarves.enabled(gameState)) {
       displayTool(domElements.Dwarves, 'Dwarves', gameState);
+      gameState.tools.Dwarves = 0;
     }
     if (gameState.tools.FloatingAxes === undefined && tools.FloatingAxes.enabled(gameState)) {
       displayTool(domElements.FloatingAxes, 'FloatingAxes', gameState);
+      gameState.tools.FloatingAxes = 0;
     }
     if (gameState.tools.LumberJohns === undefined && tools.LumberJohns.enabled(gameState)) {
       displayTool(domElements.LumberJohns, 'LumberJohns', gameState);
+      gameState.tools.LumberJohns = 0;
     }
     incrementScoreByTools(gameState);
+    gameSave(gameState);
   };
 
   const startLoop = function () {
@@ -194,5 +198,18 @@ const setupModal = function (domElements) {
 
   setupModal(domElements);
   showModal();
+  
+  if (getCookie('gameData')) {
+    gameState = gameLoad();
+
+    if (gameState.score >= 3) {
+      domElements.toolsBox.className = 'top tools';
+    };
+
+    Object.keys(gameState.tools).forEach(key => {
+      displayTool(domElements[key], key, gameState);
+    });
+  };
+
   startLoop();
 })();
