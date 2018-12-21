@@ -195,5 +195,4 @@ const setupModal = function (domElements) {
   setupModal(domElements);
   showModal();
   startLoop();
-  gameState.score = 12000;
 })();
