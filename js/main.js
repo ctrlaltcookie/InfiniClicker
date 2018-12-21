@@ -26,7 +26,9 @@ const setupModal = function (domElements) {
     score: document.getElementById('counter'),
     toolsBox: document.getElementById('toolsBox'),
     Termites: document.getElementById('termites'),
-    Dwarves: document.getElementById('dwarves')
+    Dwarves: document.getElementById('dwarves'),
+    FloatingAxes: document.getElementById('floatingaxes'),
+    LumberJohns: document.getElementById('lumberjohns')
   };
 
   const incrementClicks = function (clicks, state) {
@@ -49,13 +51,25 @@ const setupModal = function (domElements) {
   const incrementScoreByTools = function (state) {
     let termiteIncrement = 0;
     let dwarvesIncrement = 0;
+    let floatingAxesIncrement = 0;
+    let lumberJohnsIncrement = 0;
+
     if (state.tools.Termites) {
       termiteIncrement = timesDecimals(state.tools.Termites, tools.Termites.power);
     }
     if (state.tools.Dwarves) {
       dwarvesIncrement = timesDecimals(state.tools.Dwarves, tools.Dwarves.power);
     }
-    const increment = addDecimals(termiteIncrement, dwarvesIncrement);
+    if (state.tools.FloatingAxes) {
+      floatingAxesIncrement = timesDecimals(state.tools.FloatingAxes, tools.FloatingAxes.power);
+    }
+    if (state.tools.LumberJohns) {
+      lumberJohnsIncrement = timesDecimals(state.tools.LumberJohns, tools.LumberJohns.power);
+    }
+
+    let increment = addDecimals(termiteIncrement, dwarvesIncrement);
+    increment = addDecimals(increment, floatingAxesIncrement);
+    increment = addDecimals(increment, lumberJohnsIncrement)
     if (increment > 0) {
       incrementScore(increment, state);
     }
@@ -116,6 +130,12 @@ const setupModal = function (domElements) {
     if (gameState.tools.Dwarves === undefined && tools.Dwarves.enabled(gameState)) {
       displayTool(domElements.Dwarves, 'Dwarves', gameState);
     }
+    if (gameState.tools.FloatingAxes === undefined && tools.FloatingAxes.enabled(gameState)) {
+      displayTool(domElements.FloatingAxes, 'FloatingAxes', gameState);
+    }
+    if (gameState.tools.LumberJohns === undefined && tools.LumberJohns.enabled(gameState)) {
+      displayTool(domElements.LumberJohns, 'LumberJohns', gameState);
+    }
     incrementScoreByTools(gameState);
   };
 
@@ -150,22 +170,30 @@ const setupModal = function (domElements) {
     Dwarves: {
       name: 'Dwarves',
       cost: 100,
-      exponent: 1.20,
+      exponent: 1.21,
       description: "These short men really hate trees, you're not sure why but they are hard workers.",
       power: 1,
       enabled: (state) => state.score > 80
     },
     FloatingAxes: {
       name: 'Floating axes',
-      cost: 500,
+      cost: 513,
       exponent: 1.24,
       description: "None of the dwarves will use these ominous black axes, but no matter, they'll just use themselves.",
-      power: 5,
-      enabled: (state) => state.score > 300
+      power: 3,
+      enabled: (state) => state.score > 427
+    }, LumberJohns: {
+      name: 'Lumber johns',
+      cost: 1021,
+      exponent: 1.27,
+      description: "These big burly men wearing plaid attack the trees with their claw like hands, they're honestly really intense and make you a little uncomfortable.",
+      power: 8,
+      enabled: (state) => state.score > 987
     }
   };
 
   setupModal(domElements);
   showModal();
   startLoop();
+  gameState.score = 12000;
 })();
