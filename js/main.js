@@ -25,7 +25,8 @@ const setupModal = function (domElements) {
     modal: document.getElementById('modal'),
     score: document.getElementById('counter'),
     toolsBox: document.getElementById('toolsBox'),
-    Termites: document.getElementById('termites')
+    Termites: document.getElementById('termites'),
+    Dwarves: document.getElementById('dwarves')
   };
 
   const incrementClicks = function (clicks, state) {
@@ -46,9 +47,17 @@ const setupModal = function (domElements) {
   }
 
   const incrementScoreByTools = function (state) {
-    if (gameState.tools.Termites) {
-      const termiteIncrement = timesDecimals(state.tools.Termites, tools.Termites.power);
-      incrementScore(termiteIncrement, state);
+    let termiteIncrement = 0;
+    let dwarvesIncrement = 0;
+    if (state.tools.Termites) {
+      termiteIncrement = timesDecimals(state.tools.Termites, tools.Termites.power);
+    }
+    if (state.tools.Dwarves) {
+      dwarvesIncrement = timesDecimals(state.tools.Dwarves, tools.Dwarves.power);
+    }
+    const increment = addDecimals(termiteIncrement, dwarvesIncrement);
+    if (increment > 0) {
+      incrementScore(increment, state);
     }
   };
 
@@ -79,20 +88,21 @@ const setupModal = function (domElements) {
 
   const displayTool = function (domElement, tool, state) {
     state.tools[tool] = 0;
+    domElement.className = 'tool'
     domElement.innerHTML =
-      `<strong>${tools[tool].name}<\/strong>`+
-      `<p>${tools[tool].description}<\/p>`+
-      `<span id="${tool}Cost">Cost: ${tools[tool].cost}<\/span><br>`+
-      `<span id="${tool}Power">Power: ${tools[tool].power}<\/span><br>` +
-      `<span id="num${tool}">Own: ${state.tools[tool]}<\/span>`;
+      `${tools[tool].name}<br>`+
+      `<span id="num${tool}">Owned: ${state.tools[tool]}<\/span><br>` +
+      `<span id="${tool}Cost">Price: ${tools[tool].cost}<\/span><br>`+
+      `<span id="${tool}Power">Logs/s: ${tools[tool].power}<\/span><br>` +
+      `<p>${tools[tool].description}<\/p>`;
 
     domElement.onclick = function () {
       if (state.score >= tools[tool].cost) {
         state.tools[tool] += 1;
         decrementScore(tools[tool].cost, state);
         tools[tool].cost = timesDecimals(tools[tool].cost, tools[tool].exponent);
-        document.getElementById(`${tool}Cost`).innerText = `Cost: ${tools[tool].cost}`;
-        document.getElementById(`num${tool}`).innerText = `Own: ${state.tools[tool]}`;
+        document.getElementById(`${tool}Cost`).innerText = `Price: ${tools[tool].cost}`;
+        document.getElementById(`num${tool}`).innerText = `Owned: ${state.tools[tool]}`;
       }
     }
   }
@@ -102,6 +112,9 @@ const setupModal = function (domElements) {
     if (gameState.tools.Termites === undefined && tools.Termites.enabled(gameState)) {
       domElements.toolsBox.className = 'top tools'
       displayTool(domElements.Termites, 'Termites', gameState);
+    }
+    if (gameState.tools.Dwarves === undefined && tools.Dwarves.enabled(gameState)) {
+      displayTool(domElements.Dwarves, 'Dwarves', gameState);
     }
     incrementScoreByTools(gameState);
   };

@@ -37,11 +37,13 @@
 .tool, .powerup {
   width: 175px;
   padding: 5px;
-  font-size: 12;
+  height: 65px;
+  font-size: 13px;
   margin-bottom: 5px;
   margin-left: 3px;
   position: relative;
   float: left;
+  overflow: hidden;
 }
 
 .tool {
@@ -54,6 +56,7 @@
 
 .tool:hover, .powerup:hover {
   cursor: pointer;
+  height: auto;
 }
 
 .tool:hover {
