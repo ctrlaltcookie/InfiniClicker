@@ -25,7 +25,7 @@ const setupModal = function (domElements) {
     modal: document.getElementById('modal'),
     score: document.getElementById('counter'),
     toolsBox: document.getElementById('toolsBox'),
-    termites: document.getElementById('termites')
+    Termites: document.getElementById('termites')
   };
 
   const incrementClicks = function (clicks, state) {
@@ -77,33 +77,31 @@ const setupModal = function (domElements) {
     return (num1 * num2).toFixed(1);
   };
 
-  const displayTermites = function () {
-    gameState.tools.Termites = 0;
-    domElements.toolsBox.className = 'top tools';
-    domElements.termites.innerHTML =
-      `<strong>${tools.Termites.name}<\/strong>`+
-      `<p>${tools.Termites.description}<\/p>`+
-      `<span id="termiteCost">Cost: ${tools.Termites.cost}<\/span><br>`+
-      `<span id="termitePower">Power: ${tools.Termites.power}<\/span><br>` +
-      `<span id="numTermites">Own: ${gameState.tools.Termites}<\/span>`;
+  const displayTool = function (domElement, tool, state) {
+    state.tools[tool] = 0;
+    domElement.innerHTML =
+      `<strong>${tools[tool].name}<\/strong>`+
+      `<p>${tools[tool].description}<\/p>`+
+      `<span id="${tool}Cost">Cost: ${tools[tool].cost}<\/span><br>`+
+      `<span id="${tool}Power">Power: ${tools[tool].power}<\/span><br>` +
+      `<span id="num${tool}">Own: ${state.tools[tool]}<\/span>`;
 
-    domElements.termites.onclick = function () {
-      if (gameState.score >= tools.Termites.cost) {
-        gameState.tools.Termites += 1;
-        console.log(tools.Termites.cost);
-        decrementScore(tools.Termites.cost, gameState);
-        tools.Termites.cost = timesDecimals(tools.Termites.cost, tools.Termites.exponent);
-        document.getElementById('termiteCost').innerText = `Cost: ${tools.Termites.cost}`;
-        document.getElementById('numTermites').innerText = `Own: ${gameState.tools.Termites}`;
+    domElement.onclick = function () {
+      if (state.score >= tools[tool].cost) {
+        state.tools[tool] += 1;
+        decrementScore(tools[tool].cost, state);
+        tools[tool].cost = timesDecimals(tools[tool].cost, tools[tool].exponent);
+        document.getElementById(`${tool}Cost`).innerText = `Cost: ${tools[tool].cost}`;
+        document.getElementById(`num${tool}`).innerText = `Own: ${state.tools[tool]}`;
       }
     }
-  };
+  }
 
   const update = function () {
     // regular update logic goes here.
     if (gameState.tools.Termites === undefined && tools.Termites.enabled(gameState)) {
-      displayTermites();
-      gameState.tools.Termites = 0;
+      domElements.toolsBox.className = 'top tools'
+      displayTool(domElements.Termites, 'Termites', gameState);
     }
     incrementScoreByTools(gameState);
   };
@@ -131,7 +129,7 @@ const setupModal = function (domElements) {
     Termites: {
       name: 'Termites',
       cost: 10,
-      exponent: 1.12,
+      exponent: 1.22,
       description: "A fresh pack of bugs to help you cut down trees",
       power: 0.1,
       enabled: (state) => state.clicks >= 3
@@ -139,7 +137,7 @@ const setupModal = function (domElements) {
     Dwarves: {
       name: 'Dwarves',
       cost: 100,
-      exponent: 1.14,
+      exponent: 1.20,
       description: "These short men really hate trees, you're not sure why but they are hard workers",
       power: 1,
       enabled: (state) => state.score > 80
@@ -147,7 +145,7 @@ const setupModal = function (domElements) {
     FloatingAxes: {
       name: 'Floating axes',
       cost: 500,
-      exponent: 1.18,
+      exponent: 1.24,
       description: "None of the dwarves will use these ominous black axes, but no matter, they'll just use themselves",
       power: 5,
       enabled: (state) => state.score > 300
