@@ -15,5 +15,6 @@ function gameLoad () {
 }
 
 function dord () {
+  console.error('DORD');
   return;
 }
