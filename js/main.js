@@ -31,12 +31,32 @@ const setupModal = function (domElements) {
       FloatingAxes: {
         cost: 513,
         exponent: 1.24,
-        power: 3
+        power: 5
       },
       LumberJohns: {
         cost: 1021,
         exponent: 1.27,
-        power: 8
+        power: 13
+      },
+      ZombieWoodpeckers: {
+        cost: 3184,
+        exponent: 1.28,
+        power: 50,
+      },
+      MaliciousIcicles: {
+        cost: 12232,
+        exponent: 1.12,
+        power: 120
+      },
+      BenevolentWitches: {
+        cost: 30100,
+        exponent: 1.23,
+        power: 500
+      },
+      ChainsawSloths: {
+        cost: 102040,
+        exponent: 1.22,
+        power: 1200
       }
     }
   };
@@ -49,6 +69,10 @@ const setupModal = function (domElements) {
     Dwarves: document.getElementById('dwarves'),
     FloatingAxes: document.getElementById('floatingaxes'),
     LumberJohns: document.getElementById('lumberjohns'),
+    ZombieWoodpeckers: document.getElementById('zombiewoodpeckers'),
+    MaliciousIcicles: document.getElementById('maliciousicicles'),
+    BenevolentWitches: document.getElementById('benevolentwitches'),
+    ChainsawSloths: document.getElementById('chainsawsloths'),
     instruction: document.getElementById('instruction')
   };
 
@@ -70,27 +94,15 @@ const setupModal = function (domElements) {
   }
 
   const incrementScoreByTools = function (stateTools) {
-    let termiteIncrement = 0;
-    let dwarvesIncrement = 0;
-    let floatingAxesIncrement = 0;
-    let lumberJohnsIncrement = 0;
+    let increment = 0;
+    Object.keys(tools).forEach(key => {
+      tool = stateTools[key];
+      if (tool.purchased > 0) {
+        let toolIncrement = timesDecimals(tool.purchased, tool.power);
+        increment = addDecimals(toolIncrement, increment);
+      }
+    });
 
-    if (stateTools.Termites.purchased > 0) {
-      termiteIncrement = timesDecimals(stateTools.Termites.purchased, stateTools.Termites.power);
-    }
-    if (stateTools.Dwarves.purchased > 0) {
-      dwarvesIncrement = timesDecimals(stateTools.Dwarves.purchased, stateTools.Dwarves.power);
-    }
-    if (stateTools.FloatingAxes.purchased > 0) {
-      floatingAxesIncrement = timesDecimals(stateTools.FloatingAxes.purchased, stateTools.FloatingAxes.power);
-    }
-    if (stateTools.LumberJohns.purchased > 0) {
-      lumberJohnsIncrement = timesDecimals(stateTools.LumberJohns.purchased, stateTools.LumberJohns.power);
-    }
-
-    let increment = addDecimals(termiteIncrement, dwarvesIncrement);
-    increment = addDecimals(increment, floatingAxesIncrement);
-    increment = addDecimals(increment, lumberJohnsIncrement)
     if (increment > 0) {
       incrementScore(increment, gameState);
     }
@@ -141,25 +153,21 @@ const setupModal = function (domElements) {
     }
   }
 
+  const updateTool = function (state, name, domElement) {
+    if (state.tools[name].purchased === undefined && tools[name].enabled(state)) {
+      gameState.tools[name].purchased = 0;
+      displayTool(domElement, name, state);
+      if (name === 'Termites') {
+        domElements.toolsBox.className = 'top tools'
+      }
+    }
+  }
+
   const update = function () {
     // regular update logic goes here.
-    if (gameState.tools.Termites.purchased === undefined && tools.Termites.enabled(gameState)) {
-      domElements.toolsBox.className = 'top tools'
-      gameState.tools.Termites.purchased = 0;
-      displayTool(domElements.Termites, 'Termites', gameState);
-    };
-    if (gameState.tools.Dwarves.purchased === undefined && tools.Dwarves.enabled(gameState)) {
-      gameState.tools.Dwarves.purchased = 0;
-      displayTool(domElements.Dwarves, 'Dwarves', gameState);
-    };
-    if (gameState.tools.FloatingAxes.purchased === undefined && tools.FloatingAxes.enabled(gameState)) {
-      gameState.tools.FloatingAxes.purchased = 0;
-      displayTool(domElements.FloatingAxes, 'FloatingAxes', gameState);
-    };
-    if (gameState.tools.LumberJohns.purchased === undefined && tools.LumberJohns.enabled(gameState)) {
-      gameState.tools.LumberJohns.purchased = 0;
-      displayTool(domElements.LumberJohns, 'LumberJohns', gameState);
-    };
+    Object.keys(tools).forEach(key => {
+      updateTool(gameState, key, domElements[key]);
+    });
     incrementScoreByTools(gameState.tools);
     gameSave(gameState);
   };
@@ -203,6 +211,22 @@ const setupModal = function (domElements) {
       name: 'Lumber johns',
       description: "These big burly men wearing plaid attack the trees with their claw like hands, they're honestly really intense and make you a little uncomfortable.",
       enabled: (state) => state.score > 987
+    }, ZombieWoodpeckers: {
+      name: 'Zombie Woodpeckers',
+      description: "Fallen tree dwellers have risen to join your fight, they cut trees down with their vicious pecks.",
+      enabled: (state) => state.score > 3000,
+    }, MaliciousIcicles: {
+      name: "Malicious Icicles",
+      description: "It's not readily apparent why, but the icicles that form in the area will fall into trees and deal significant damage.",
+      enabled: (state) => state.score > 10000,
+    }, BenevolentWitches: {
+      name: "Benevolent Witches",
+      description: "Kids keep coming into the woods with cameras and drawing these witches out, they seem interested in joining the fight against the tree hordes.",
+      enabled: (state) => state.score > 28000
+    }, ChainsawSloths: {
+      name: "Chainsaw Sloths",
+      description: "You wouldn't expect that something so slow would be so efficient at cutting down trees, but they manage.",
+      enabled: (state) => state.score > 88000
     }
   };
 
@@ -214,7 +238,7 @@ const setupModal = function (domElements) {
 
     if (gameState.score >= 3) {
       domElements.toolsBox.className = 'top tools';
-    }
+    };
 
     Object.keys(gameState.tools).forEach(key => {
       if (gameState.tools[key].purchased !== undefined) {
