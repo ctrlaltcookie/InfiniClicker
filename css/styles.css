@@ -160,3 +160,7 @@
   border: #5cb85c;
   border-style: groove;
 }
+
+.scorepersecond {
+  font-size: 12px;
+}

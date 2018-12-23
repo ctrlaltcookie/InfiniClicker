@@ -72,6 +72,7 @@ const setupModal = function (domElements) {
   const domElements = {
     modal: document.getElementById('modal'),
     score: document.getElementById('counter'),
+    scorePerSecond: document.getElementById('scorepersecond'),
     toolsBox: document.getElementById('toolsBox'),
     Termites: document.getElementById('termites'),
     Dwarves: document.getElementById('dwarves'),
@@ -113,6 +114,7 @@ const setupModal = function (domElements) {
 
     if (increment > 0) {
       incrementScore(increment, gameState);
+      updateScorePerSecondLabel(increment);
     }
   };
 
@@ -128,6 +130,10 @@ const setupModal = function (domElements) {
   const updateScoreLabel = function (score) {
     domElements.score.innerText = score;
   };
+
+  const updateScorePerSecondLabel = function (scorePerSecond) {
+    domElements.scorePerSecond.innerText = `${scorePerSecond} logs/s`;
+  }
 
   const addDecimals = function (num1, num2) {
     return Math.round(num1 * 100 + num2 * 100) / 100;
