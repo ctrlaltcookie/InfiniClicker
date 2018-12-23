@@ -19,43 +19,51 @@ const setupModal = function (domElements) {
     multiplier: 0,
     tools: {
       Termites: {
-        cost: 10,
-        exponent: 1.22,
+        baseCost: 15,
+        cost: 15,
+        exponent: 1.14,
         power: 0.1
       },
       Dwarves: {
-        cost: 100,
-        exponent: 1.21,
-        power: 1
+        baseCost: 120,
+        cost: 120,
+        exponent: 1.14,
+        power: 2
       },
       FloatingAxes: {
-        cost: 513,
-        exponent: 1.24,
+        baseCost: 1207,
+        cost: 1207,
+        exponent: 1.14,
         power: 5
       },
       LumberJohns: {
-        cost: 1021,
-        exponent: 1.27,
+        baseCost: 17001,
+        cost: 17001,
+        exponent: 1.15,
         power: 13
       },
       ZombieWoodpeckers: {
-        cost: 3184,
-        exponent: 1.28,
+        baseCost: 290123,
+        cost: 290123,
+        exponent: 1.15,
         power: 50,
       },
       MaliciousIcicles: {
-        cost: 12232,
-        exponent: 1.12,
+        baseCost: 1232326,
+        cost: 1232326,
+        exponent: 1.15,
         power: 120
       },
       BenevolentWitches: {
-        cost: 30100,
-        exponent: 1.23,
+        baseCost: 10204060,
+        cost: 10204060,
+        exponent: 1.16,
         power: 500
       },
       ChainsawSloths: {
-        cost: 102040,
-        exponent: 1.22,
+        baseCost: 300000000,
+        cost: 300000000,
+        exponent: 1.16,
         power: 1200
       }
     }
@@ -133,24 +141,30 @@ const setupModal = function (domElements) {
     return (num1 * num2).toFixed(1);
   };
 
-  const displayTool = function (domElement, tool, state) {
+  const displayTool = function (domElement, name, state) {
+    const tool = state.tools[name];
     domElement.className = 'tool'
     domElement.innerHTML =
-      `${tools[tool].name}<br>`+
-      `<span id="num${tool}">Owned: ${state.tools[tool].purchased}<\/span><br>` +
-      `<span id="${tool}Cost">Price: ${state.tools[tool].cost}<\/span><br>`+
-      `<span id="${tool}Power">Logs/s: ${state.tools[tool].power}<\/span><br>` +
-      `<p>${tools[tool].description}<\/p>`;
+      `${tools[name].name}<br>`+
+      `<span id="num${name}">Owned: ${tool.purchased}<\/span><br>` +
+      `<span id="${name}Cost">Price: ${tool.cost}<\/span><br>`+
+      `<span id="${name}Power">Logs/s: ${tool.power}<\/span><br>` +
+      `<p>${tools[name].description}<\/p>`;
 
     domElement.onclick = function () {
-      if (state.score >= state.tools[tool].cost) {
-        state.tools[tool].purchased += 1;
-        decrementScore(state.tools[tool].cost, state);
-        state.tools[tool].cost = timesDecimals(state.tools[tool].cost, state.tools[tool].exponent);
-        document.getElementById(`${tool}Cost`).innerText = `Price: ${state.tools[tool].cost}`;
-        document.getElementById(`num${tool}`).innerText = `Owned: ${state.tools[tool].purchased}`;
+      if (state.score >= tool.cost) {
+        tool.purchased += 1;
+        decrementScore(tool.cost, state);
+        tool.cost = calculateCost(tool.baseCost, tool.purchased, tool.exponent);
+        document.getElementById(`${name}Cost`).innerText = `Price: ${tool.cost}`;
+        document.getElementById(`num${name}`).innerText = `Owned: ${tool.purchased}`;
       }
     }
+  }
+
+  const calculateCost = function (baseCost, amount, exponent) {
+    const power = Math.pow(exponent, amount);
+    return timesDecimals(baseCost, power);
   }
 
   const updateTool = function (state, name, domElement) {
@@ -192,6 +206,12 @@ const setupModal = function (domElements) {
     }
   };
 
+  const tenPercent = function (name)
+  {
+    const tenPercent = (gameState.tools[name].baseCost/100)*10;
+    return gameState.tools[name].baseCost - tenPercent;
+  }
+
   const tools = {
     Termites: {
       name: 'Termites',
@@ -201,32 +221,32 @@ const setupModal = function (domElements) {
     Dwarves: {
       name: 'Dwarves',
       description: "These short men really hate trees, you're not sure why but they are hard workers.",
-      enabled: (state) => state.score > 80
+      enabled: (state) => state.score > tenPercent('Dwarves')
     },
     FloatingAxes: {
       name: 'Floating axes',
       description: "None of the dwarves will use these ominous black axes, but no matter, they'll just use themselves.",
-      enabled: (state) => state.score > 427
+      enabled: (state) => state.score > tenPercent('FloatingAxes')
     }, LumberJohns: {
       name: 'Lumber johns',
       description: "These big burly men wearing plaid attack the trees with their claw like hands, they're honestly really intense and make you a little uncomfortable.",
-      enabled: (state) => state.score > 987
+      enabled: (state) => state.score > tenPercent('LumberJohns')
     }, ZombieWoodpeckers: {
       name: 'Zombie Woodpeckers',
       description: "Fallen tree dwellers have risen to join your fight, they cut trees down with their vicious pecks.",
-      enabled: (state) => state.score > 3000,
+      enabled: (state) => state.score > tenPercent('ZombieWoodpeckers'),
     }, MaliciousIcicles: {
       name: "Malicious Icicles",
       description: "It's not readily apparent why, but the icicles that form in the area will fall into trees and deal significant damage.",
-      enabled: (state) => state.score > 10000,
+      enabled: (state) => state.score > tenPercent('MaliciousIcicles'),
     }, BenevolentWitches: {
       name: "Benevolent Witches",
       description: "Kids keep coming into the woods with cameras and drawing these witches out, they seem interested in joining the fight against the tree hordes.",
-      enabled: (state) => state.score > 28000
+      enabled: (state) => state.score > tenPercent('BenevolentWitches')
     }, ChainsawSloths: {
       name: "Chainsaw Sloths",
       description: "You wouldn't expect that something so slow would be so efficient at cutting down trees, but they manage.",
-      enabled: (state) => state.score > 88000
+      enabled: (state) => state.score > tenPercent('ChainsawSloths')
     }
   };
 
