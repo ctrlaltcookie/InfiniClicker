@@ -199,24 +199,22 @@ const setupModal = function (domElements) {
     function step() {
       const dt = Date.now() - expected; // the drift (positive for overshooting)
       if (dt > interval) {
-        domElements.instruction.innerText = 'Something went wrong in the game loop, you should reload';
+        expected = Date.now() + interval;
         dord();
+      } else {
+        expected += interval;
       }
 
       // Call game functions
       update();
-      //
-
-      expected += interval;
       setTimeout(step, Math.max(0, interval - dt));
     }
   };
 
-  const tenPercent = function (name)
-  {
+  const ninetyPercent = function (name) {
     const tenPercent = (gameState.tools[name].baseCost/100)*10;
     return gameState.tools[name].baseCost - tenPercent;
-  }
+  };
 
   const tools = {
     Termites: {
@@ -227,32 +225,32 @@ const setupModal = function (domElements) {
     Dwarves: {
       name: 'Dwarves',
       description: "These short men really hate trees, you're not sure why but they are hard workers.",
-      enabled: (state) => state.score > tenPercent('Dwarves')
+      enabled: (state) => state.score > ninetyPercent('Dwarves')
     },
     FloatingAxes: {
       name: 'Floating axes',
       description: "None of the dwarves will use these ominous black axes, but no matter, they'll just use themselves.",
-      enabled: (state) => state.score > tenPercent('FloatingAxes')
+      enabled: (state) => state.score > ninetyPercent('FloatingAxes')
     }, LumberJohns: {
       name: 'Lumber johns',
       description: "These big burly men wearing plaid attack the trees with their claw like hands, they're honestly really intense and make you a little uncomfortable.",
-      enabled: (state) => state.score > tenPercent('LumberJohns')
+      enabled: (state) => state.score > ninetyPercent('LumberJohns')
     }, ZombieWoodpeckers: {
       name: 'Zombie Woodpeckers',
       description: "Fallen tree dwellers have risen to join your fight, they cut trees down with their vicious pecks.",
-      enabled: (state) => state.score > tenPercent('ZombieWoodpeckers'),
+      enabled: (state) => state.score > ninetyPercent('ZombieWoodpeckers'),
     }, MaliciousIcicles: {
       name: "Malicious Icicles",
       description: "It's not readily apparent why, but the icicles that form in the area will fall into trees and deal significant damage.",
-      enabled: (state) => state.score > tenPercent('MaliciousIcicles'),
+      enabled: (state) => state.score > ninetyPercent('MaliciousIcicles'),
     }, BenevolentWitches: {
       name: "Benevolent Witches",
       description: "Kids keep coming into the woods with cameras and drawing these witches out, they seem interested in joining the fight against the tree hordes.",
-      enabled: (state) => state.score > tenPercent('BenevolentWitches')
+      enabled: (state) => state.score > ninetyPercent('BenevolentWitches')
     }, ChainsawSloths: {
       name: "Chainsaw Sloths",
-      description: "You wouldn't expect that something so slow would be so efficient at cutting down trees, but they manage.",
-      enabled: (state) => state.score > tenPercent('ChainsawSloths')
+      description: "You wouldn't expect that something so slow would be so efficient at cutting down trees, the chainsaws definitely help.",
+      enabled: (state) => state.score > ninetyPercent('ChainsawSloths')
     }
   };
 
